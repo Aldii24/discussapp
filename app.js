@@ -16,23 +16,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser())
 
 
-// app.use((req, res, next) => {
-//     res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-//     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//     res.setHeader("Access-Control-Allow-Credentials", "true");
-//     next();
-// });
-
-
 app.use(cors({
     origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
 }));
-
-
 
 app.use(errorMiddleware)
 
@@ -46,6 +35,5 @@ app.get("/", (req, res) => {
 })
 
 app.listen(PORT, async (req, res) => {
-    console.log(`Server is running on http://localhost:${PORT}`);
     await connetToDatabase()
 })
