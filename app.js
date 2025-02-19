@@ -31,7 +31,7 @@ app.use("/api/v1/threads", threadRouter)
 app.use("/api/v1/comments", commentRouter)
 
 app.get("/", (req, res) => {
-    res.send("Welcome to Discussion Chat Api");
+    res.send("Welcome to Discussion Chat Api Created By Aldi");
 })
 
 app.listen(PORT, async (req, res) => {
