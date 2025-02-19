@@ -34,6 +34,10 @@ app.get("/", (req, res) => {
     res.send("Welcome to Discussion Chat Api Created By Aldi");
 })
 
+app.get("/testing", (req, res) => {
+    res.send("Testing Server Vercel")
+})
+
 app.listen(PORT, async (req, res) => {
     console.log(`Server is running on port ${PORT}`);
     await connetToDatabase()
