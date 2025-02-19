@@ -1,37 +1,48 @@
 import { JWT_SECRET } from "../config/env.js";
 import User from "../models/user.model.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const authorize = async (req, res, next) => {
     try {
         let token;
 
         if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-            token = req.headers.authorization.split(" ")[1]
+            token = req.headers.authorization.split(" ")[1];
         }
 
         if (!token) {
-            res.status(401).json({
+            return res.status(401).json({
                 success: false,
-                message: "Unautorized"
-            })
+                message: "Unauthorized"
+            });
         }
 
-        const decoded = jwt.verify(token, JWT_SECRET)
+        const decoded = jwt.verify(token, JWT_SECRET);
 
-        const user = await User.findById(decoded.userId)
+        if (!decoded?.userId) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid token"
+            });
+        }
+
+        const user = await User.findById(decoded.userId);
 
         if (!user) {
-            const error = new Error("User not found")
-            error.statusCode = 404
-            throw error
+            return res.status(401).json({
+                success: false,
+                message: "User not found"
+            });
         }
 
-        req.user = user
-        next()
+        req.user = user;
+        next();
     } catch (error) {
-        next(error)
+        return res.status(401).json({
+            success: false,
+            message: "Invalid or expired token"
+        });
     }
-}
+};
 
-export default authorize
+export default authorize;

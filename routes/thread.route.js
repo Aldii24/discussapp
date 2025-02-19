@@ -4,7 +4,7 @@ import { createThread, deleteThread, getAllThreads, getThread, likeUnlikeThread,
 
 const threadRouter = Router()
 
-threadRouter.get("/", getAllThreads)
+threadRouter.get("/", authorize, getAllThreads)
 threadRouter.get("/:id", authorize, getThread)
 threadRouter.post("/:id/like", authorize, likeUnlikeThread)
 threadRouter.post("/", authorize, createThread)
