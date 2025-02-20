@@ -42,7 +42,7 @@ export const getThread = async (req, res, next) => {
 
 export const getAllThreads = async (req, res, next) => {
     try {
-        const threads = await Thread.find().populate("author", "name email")
+        const threads = await Thread.find().sort({ createdAt: -1 }).populate("author", "name email")
 
         if (!threads) {
             const error = new Error("Threads not found")

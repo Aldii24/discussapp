@@ -20,6 +20,10 @@ const threadSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.ObjectId],
         ref: "User"
     },
+    comments: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "Comment"
+    },
 }, { timestamps: true })
 
 const Thread = mongoose.model("Thread", threadSchema)
